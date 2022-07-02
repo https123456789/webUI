@@ -1,0 +1,10 @@
+run = "npm run test"
+
+[nix]
+channel = "stable-21_11"
+
+[languages.javascript]
+pattern = "**/{*.js,*.jsx,*.ts,*.tsx}"
+
+[languages.javascript.languageServer]
+start = ["typescript-language-server", "--stdio"]
