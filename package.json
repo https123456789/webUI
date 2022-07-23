@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "build": "rollup --config rollup.config.js",
+    "test": "jest",
     "watch": "rollup --config rollup.config.js -w"
   },
   "keywords": [],
@@ -12,8 +13,12 @@
   "dependencies": {
     "@rollup/plugin-typescript": "^8.3.3",
     "rollup": "^2.75.7",
-    "sass": "^1.54.0",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^28.1.6",
+    "jest": "^28.1.3",
+    "ts-jest": "^28.0.7"
   }
 }
