@@ -1,11 +1,13 @@
 import ViewElement from "./element";
 import Application from "../application/application";
-import GenericComponent from "../genericComponent/genericComponent";
 
-class View extends GenericComponent {
+class View {
+	public application: Application;
 	public child: any;
+	public element: ViewElement;
 	constructor(application: Application) {
-		super(application, ViewElement);
+		this.application = application;
+		this.element = new ViewElement(this);
 		this.element.dom.element.classList.add("view");
 	}
 	setBackground(r: number, g: number, b: number) {

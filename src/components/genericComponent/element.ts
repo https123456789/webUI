@@ -3,8 +3,9 @@ import GenericComponent from "./genericComponent";
 
 class GenericComponentElement {
     public parent: any;
-    public dom: DomElementConnection = new DomElementConnection("div");
-    constructor(parent: any) {
+    public dom: DomElementConnection;
+    constructor(parent: any, htmlElementType: string = "div") {
+        this.dom = new DomElementConnection(htmlElementType);
         this.parent = parent;
         this.dom.createConnection();
     }

@@ -1,11 +1,10 @@
-import Application from "../application/application";
 import GenericComponentElement from "./element";
 
 class GenericComponent {
-    public application: Application;
+    public parent: any;
     public element: any;
-    constructor(application: Application, elementClass = GenericComponentElement) {
-        this.application = application;
+    constructor(parent: any, elementClass = GenericComponentElement) {
+        this.parent = parent;
         this.element = new elementClass(this);
     }
 }

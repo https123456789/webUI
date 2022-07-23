@@ -45,8 +45,8 @@
     }
 
     class GenericComponentElement {
-        constructor(parent) {
-            this.dom = new DomElementConnection("div");
+        constructor(parent, htmlElementType = "div") {
+            this.dom = new DomElementConnection(htmlElementType);
             this.parent = parent;
             this.dom.createConnection();
         }
@@ -67,16 +67,10 @@
         }
     }
 
-    class GenericComponent {
-        constructor(application, elementClass = GenericComponentElement) {
-            this.application = application;
-            this.element = new elementClass(this);
-        }
-    }
-
-    class View extends GenericComponent {
+    class View {
         constructor(application) {
-            super(application, ViewElement);
+            this.application = application;
+            this.element = new ViewElement(this);
             this.element.dom.element.classList.add("view");
         }
         setBackground(r, g, b) {
@@ -163,6 +157,35 @@
         }
     }
 
+    class GenericComponent {
+        constructor(parent, elementClass = GenericComponentElement) {
+            this.parent = parent;
+            this.element = new elementClass(this);
+        }
+    }
+
+    class ButtonElement extends GenericComponentElement {
+        constructor(parent) {
+            super(parent, "button");
+            this.dom.element.classList.add("button");
+        }
+        setText(text) {
+            this.dom.element.innerHTML = text;
+        }
+    }
+
+    class Button extends GenericComponent {
+        constructor(parent, text = "") {
+            super(parent, ButtonElement);
+            this.text = "";
+            this.setText(text);
+        }
+        setText(text) {
+            this.text = text;
+            this.element.setText(this.text);
+        }
+    }
+
     class StackElement {
         constructor(parent) {
             this.parent = parent;
@@ -170,7 +193,7 @@
             this.dom.createConnection();
             this.dom.element.style.display = "flex";
             this.dom.element.style.flexDirection = "column";
-            this.dom.element.style.flex = 1;
+            //this.dom.element.style.flex = 1;
             this.dom.element.classList.add("stack");
         }
         clearContents() {
@@ -241,6 +264,7 @@
 
     var WebUI = {
         Application: Application,
+        Button: Button,
         HStack: HStack,
         Label: Label,
         View: View,
