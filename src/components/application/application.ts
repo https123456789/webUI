@@ -43,7 +43,8 @@ class Application {
 			throw e;
 		}
 		this.initView = view;
-		this.addView(view);
+		this.views.push(view);
+		this.element.addView(view);
 		console.log(`Application initView set to ${view}`);
 	}
 	addView(view: View) {
@@ -58,6 +59,10 @@ class Application {
 			var e = new TypeError();
 			e.message = `WebUI.Application.addView only accepts instances of type WebUI.View, with property 'element' that is an instance of WebUI.ViewElement. Recived object with 'element' property: ${view.element} of class ${view.element.constructor.name}`;
 			throw e;
+		}
+		if (this.views.length < 1) {
+			this.setInitView(view);
+			return;
 		}
 		this.views.push(view);
 		this.element.addView(view);
