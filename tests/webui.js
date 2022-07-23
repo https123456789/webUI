@@ -44,7 +44,7 @@
         }
     }
 
-    class ViewElement {
+    class GenericComponentElement {
         constructor(parent) {
             this.dom = new DomElementConnection("div");
             this.parent = parent;
@@ -52,10 +52,13 @@
         }
         setBackgroudColor(r, g, b) {
             /*
-                Changes the view's background color
+                Changes the element's background color
             */
             this.dom.element.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
         }
+    }
+
+    class ViewElement extends GenericComponentElement {
         setChild() {
             while (this.dom.element.firstChild) {
                 this.dom.element.removeChild(this.dom.element.lastChild);
@@ -64,26 +67,24 @@
         }
     }
 
-    class View {
-        constructor(application) {
+    class GenericComponent {
+        constructor(application, elementClass = GenericComponentElement) {
             this.application = application;
-            this.element = new ViewElement(this);
+            this.element = new elementClass(this);
+        }
+    }
+
+    class View extends GenericComponent {
+        constructor(application) {
+            super(application, ViewElement);
+            this.element.dom.element.classList.add("view");
         }
         setBackground(r, g, b) {
-            /*
-                Sets the background of the view
-            */
             this.element.setBackgroudColor(r, g, b);
         }
         setChild(child) {
             this.child = child;
             this.element.setChild();
-        }
-        hasBeenAddedToApplication(event) {
-            /*
-                Triggered when the view is added to an application
-            */
-            console.log("Added to app!");
         }
     }
 
@@ -94,10 +95,19 @@
         }
     }
 
+    class DefaultView extends View {
+        constructor(application) {
+            super(application);
+            this.setBackground(255, 255, 255);
+        }
+    }
+
     class Application {
         constructor() {
+            this.initView = new DefaultView(this);
             this.views = [];
             this.element = new ApplicationElement(this);
+            this.element.dom.element.classList.add("application");
         }
         run() {
             this.init();
@@ -156,6 +166,7 @@
             this.dom.element.style.display = "flex";
             this.dom.element.style.flexDirection = "column";
             this.dom.element.style.flex = 1;
+            this.dom.element.classList.add("stack");
         }
         clearContents() {
             while (this.dom.element.firstChild) {
@@ -163,7 +174,7 @@
             }
         }
         addChild(child) {
-            this.dom.element.appendChild(child.elemtn.dom.element);
+            this.dom.element.appendChild(child.element.dom.element);
         }
     }
 
@@ -172,9 +183,11 @@
             this.parent = parent;
             this.element = new StackElement(this);
             this.children = [];
+            this.updateDOM();
         }
         addChild(child) {
             this.children.push(child);
+            this.updateDOM();
         }
         updateDOM() {
             this.element.clearContents();
@@ -210,6 +223,7 @@
     class VStackElement extends StackElement {
         constructor(parent) {
             super(parent);
+            this.dom.element.classList.add("vstack");
         }
     }
 

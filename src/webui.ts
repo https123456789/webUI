@@ -1,8 +1,8 @@
-import Application from "./application/application.js";
-import HStack from "./hstack/hstack.js";
-import Label from "./label/label.js";
-import View from "./view/view.js";
-import VStack from "./vstack/vstack.js";
+import Application from "./components/application/application.js";
+import HStack from "./components/hstack/hstack.js";
+import Label from "./components/label/label.js";
+import View from "./components/view/view.js";
+import VStack from "./components/vstack/vstack.js";
 
 var WebUI = {
 	Application: Application,

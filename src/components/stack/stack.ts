@@ -11,9 +11,11 @@ class Stack {
 		this.parent = parent;
 		this.element = new StackElement(this);
 		this.children = [];
+		this.updateDOM();
 	}
 	addChild(child: any) {
 		this.children.push(child);
+		this.updateDOM();
 	}
 	updateDOM() {
 		this.element.clearContents();

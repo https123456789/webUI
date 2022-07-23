@@ -1,17 +1,21 @@
 import {
 	isA
-} from "../global/typing";
+} from "../../global/typing";
 import ApplicationElement from "./element";
 import View from "../view/view";
 import ViewElement from "../view/element";
-import WrongTypeError from "../errors/WrongTypeError";
+import WrongTypeError from "../../errors/WrongTypeError";
+
+// Defaults
+import DefaultView from "../../defaults/defaultView";
 
 class Application {
 	public element: ApplicationElement;
-	public initView: View;
+	public initView: View = new DefaultView(this);
 	public views: View[] = [];
 	constructor() {
 		this.element = new ApplicationElement(this);
+		this.element.dom.element.classList.add("application");
 	}
 	run() {
 		this.init();

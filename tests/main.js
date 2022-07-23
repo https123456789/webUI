@@ -12,10 +12,12 @@ var vs = new WebUI.VStack(homeView);
 // add it the home view
 homeView.setChild(vs);
 
-// Create label
+// Create labels
 var label = new WebUI.Label(vs, "Hello World!");
-// Add it to the main container
+var label2 = new WebUI.Label(vs, "From WebUI!");
+// Add them to the main container
 vs.addChild(label);
+vs.addChild(label2);
 
 // Run the app
 app.run();
