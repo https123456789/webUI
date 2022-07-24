@@ -196,7 +196,7 @@
     }
 
     class GenericComponent {
-        constructor(parent, elementClass = GenericComponentElement) {
+        constructor(parent = null, elementClass = GenericComponentElement) {
             this.parent = parent;
             this.element = new elementClass(this);
         }
@@ -300,6 +300,31 @@
         }
     }
 
+    class LinkElement extends GenericComponentElement {
+        constructor(parent, href = "") {
+            super(parent, "a");
+            this.href = href;
+        }
+    }
+
+    class Link extends GenericComponent {
+        constructor(parent = null, href = "", text = "") {
+            super(parent, LinkElement);
+            this.href = "";
+            this.text = "";
+            this.setDestination(href);
+            this.setText(text);
+        }
+        setDestination(href) {
+            this.href = href;
+            this.element.dom.element.href = this.href;
+        }
+        setText(text) {
+            this.text = text;
+            this.element.dom.element.innerHTML = this.text;
+        }
+    }
+
     class VStackElement extends StackElement {
         constructor(parent) {
             super(parent);
@@ -319,6 +344,7 @@
         Button: Button,
         HStack: HStack,
         Label: Label,
+        Link: Link,
         View: View,
         VStack: VStack
     };

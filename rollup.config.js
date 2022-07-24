@@ -3,6 +3,7 @@ import "fs";
 
 let exampleDirs = [
 	"examples/gettingStarted",
+	"examples/links",
 	"examples/multiView"
 ]
 
