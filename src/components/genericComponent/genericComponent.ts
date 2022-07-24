@@ -7,6 +7,12 @@ class GenericComponent {
         this.parent = parent;
         this.element = new elementClass(this);
     }
+    addEventListener(eventType: string, callback: Function) {
+        this.element.dom.element.addEventListener(eventType, callback);
+    }
+    removeEventListener(eventType: string, callback: Function) {
+        this.element.dom.element.removeEventListener(eventType, callback);
+    }
 }
 
 export default GenericComponent;

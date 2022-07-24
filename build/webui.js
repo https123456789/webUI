@@ -200,6 +200,12 @@
             this.parent = parent;
             this.element = new elementClass(this);
         }
+        addEventListener(eventType, callback) {
+            this.element.dom.element.addEventListener(eventType, callback);
+        }
+        removeEventListener(eventType, callback) {
+            this.element.dom.element.removeEventListener(eventType, callback);
+        }
     }
 
     class ButtonElement extends GenericComponentElement {
@@ -213,14 +219,22 @@
     }
 
     class Button extends GenericComponent {
-        constructor(parent, text = "") {
+        constructor(parent, text = "", clickAction = () => { }) {
             super(parent, ButtonElement);
             this.text = "";
+            this.clickAction = () => { };
+            this.setClickAction(clickAction);
             this.setText(text);
+            this.addEventListener("click", this.clickAction);
         }
         setText(text) {
             this.text = text;
             this.element.setText(this.text);
+        }
+        setClickAction(func) {
+            this.removeEventListener("click", this.clickAction);
+            this.clickAction = func;
+            this.addEventListener("click", this.clickAction);
         }
     }
 
