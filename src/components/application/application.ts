@@ -10,17 +10,29 @@ import WrongTypeError from "../../errors/WrongTypeError";
 import DefaultView from "../../defaults/defaultView";
 
 class Application {
+	/**
+	 * Represents an application
+	 */
 	public element: ApplicationElement;
 	public initView: View = new DefaultView(this);
 	public views: View[] = [];
+	public activeView: View = this.initView;
 	constructor() {
 		this.element = new ApplicationElement(this);
 		this.element.dom.element.classList.add("application");
+		this.initView.hide();
 	}
 	run() {
-		this.init();
+		this._init();
 	}
-	init() {
+	_init() {
+		/**
+		 * Initializes the application
+		 * 
+		 * This inlcludes adding the element to the DOM
+		 * 
+		 * @throws {@link Error | An error if no views are present}
+		 */
 		// Check if init view is set
 		if (!this.initView) {
 			var e = new Error();
@@ -64,9 +76,23 @@ class Application {
 			this.setInitView(view);
 			return;
 		}
+		// Make sure view is not visible
+		view.hide();
+		// Add view
 		this.views.push(view);
 		this.element.addView(view);
 		console.log("Added view " + view);
+	}
+	setView(id: number) {
+		if (id > this.views.length) {
+			let e = new ReferenceError("Id is greater than views in application");
+			throw e;
+		}
+		// Hide current view
+		this.activeView.hide();
+		// Assign and show new view
+		this.activeView = this.views[id];
+		this.activeView.show();
 	}
 }
 

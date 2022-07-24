@@ -5,6 +5,7 @@ class View {
 	public application: Application;
 	public child: any;
 	public element: ViewElement;
+	public isVisible: boolean = false;
 	constructor(application: Application) {
 		this.application = application;
 		this.element = new ViewElement(this);
@@ -16,6 +17,14 @@ class View {
 	setChild(child: any) {
 		this.child = child;
 		this.element.setChild();
+	}
+	show() {
+		this.element.show();
+		this.isVisible = true;
+	}
+	hide() {
+		this.element.hide();
+		this.isVisible = false;
 	}
 }
 

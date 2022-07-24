@@ -25,5 +25,8 @@ vs2.addChild(b2);
 app.addView(firstView);
 app.addView(secondView);
 
+// Set view to first view
+app.setView(0);
+
 // Run app
 app.run();

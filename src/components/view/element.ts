@@ -1,4 +1,3 @@
-import DomElementConnection from "../domconnection/domconnection";
 import View from "./view";
 import GenericComponentElement from "../genericComponent/element";
 
@@ -12,6 +11,12 @@ class ViewElement extends GenericComponentElement {
 		this.dom.element.appendChild(
 			this.parent.child.element.dom.element
 		);
+	}
+	show() {
+		this.dom.element.style.display = "block";
+	}
+	hide() {
+		this.dom.element.style.display = "none";
 	}
 }
 

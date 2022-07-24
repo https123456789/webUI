@@ -65,10 +65,17 @@
             }
             this.dom.element.appendChild(this.parent.child.element.dom.element);
         }
+        show() {
+            this.dom.element.style.display = "block";
+        }
+        hide() {
+            this.dom.element.style.display = "none";
+        }
     }
 
     class View {
         constructor(application) {
+            this.isVisible = false;
             this.application = application;
             this.element = new ViewElement(this);
             this.element.dom.element.classList.add("view");
@@ -79,6 +86,14 @@
         setChild(child) {
             this.child = child;
             this.element.setChild();
+        }
+        show() {
+            this.element.show();
+            this.isVisible = true;
+        }
+        hide() {
+            this.element.hide();
+            this.isVisible = false;
         }
     }
 
@@ -100,13 +115,22 @@
         constructor() {
             this.initView = new DefaultView(this);
             this.views = [];
+            this.activeView = this.initView;
             this.element = new ApplicationElement(this);
             this.element.dom.element.classList.add("application");
+            this.initView.hide();
         }
         run() {
-            this.init();
+            this._init();
         }
-        init() {
+        _init() {
+            /**
+             * Initializes the application
+             *
+             * This inlcludes adding the element to the DOM
+             *
+             * @throws {@link Error | An error if no views are present}
+             */
             // Check if init view is set
             if (!this.initView) {
                 var e = new Error();
@@ -151,9 +175,23 @@
                 this.setInitView(view);
                 return;
             }
+            // Make sure view is not visible
+            view.hide();
+            // Add view
             this.views.push(view);
             this.element.addView(view);
             console.log("Added view " + view);
+        }
+        setView(id) {
+            if (id > this.views.length) {
+                let e = new ReferenceError("Id is greater than views in application");
+                throw e;
+            }
+            // Hide current view
+            this.activeView.hide();
+            // Assign and show new view
+            this.activeView = this.views[id];
+            this.activeView.show();
         }
     }
 
